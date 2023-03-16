@@ -1,8 +1,6 @@
 # O meu repositório
 
-## PME_5_ano
-
-Dimensionamento de uma Ladder Hoist
+## PME_5_ano - Dimensionamento de uma Ladder Hoist
 
 ### gear_defenition
 
