@@ -62,7 +62,7 @@ Ybeta = 1/cos(beta);
 Khl(1) = 8/log10(Nciclos(1));
 Khl(2) = 8/log10(Nciclos(2));
 Khl(3) = 8/log10(Nciclos(3));
-oblim = 195; % MPa - aço ao carbono C45
+oblim = 240; % MPa - aço ao carbono C45
 ohlim = 500; % MPa - aço ao carbono C45
 E = 200000; %MPa
 v = 0.3;
@@ -79,17 +79,17 @@ pinhao(idx).dentes_virtual = pinhao(idx).dentes/cos(beta)^3;
 
 % Cálculo do módulo
 
-mn_fad(idx) = ((19600*P_motor_catalogo*cos(beta)*KM*Kbl(idx)*Ye*(u(idx)+1))...
-    /(Clb*oblim*pinhao(idx).rotacao*Ka*pinhao(idx).dentes_virtual*Yf*...
-    Ybeta*u(idx))).^(-1/3);
+mn_fad(idx) = ((19600*P_motor_catalogo*cos(beta)*KM*Kbl(idx)*Ye)/(Clb*oblim...
+    *pinhao(idx).rotacao*Ka*pinhao(idx).dentes_virtual*Yf*Ybeta)...
+    *((u(idx))+1)/u(idx)).^(1/3);
 mn_hertz(idx) = ((60000*P_motor_catalogo*cos(beta)*KM*2*E*(u(idx)+1))...
     /((pi^2)*Clb*(ohlim^2)*pinhao(idx).rotacao*Ka*pinhao(idx).dentes_virtual...
-    *Khl(idx)*sin(2*alpha)*(1-v^2)*u(idx)))^(-1/3);
+    *Khl(idx)*sin(2*alpha)*(1-v^2)*u(idx)))^(1/3);
 
 if mn_fad(idx) > mn_hertz(idx)
-    mn(idx) = 1;
+    mn(idx) = 1.25;
 else
-    mn(idx) = 0.3;
+    mn(idx) = 5;
 end
 
 %calculo das variáveis dependentes do módulo para o pinhão e roda
@@ -132,18 +132,18 @@ pinhao(idx).dentes_virtual = pinhao(idx).dentes/cos(beta)^3;
 
 % Cálculo do módulo
 
-mn_fad(idx) = ((19600*P_motor_catalogo*cos(beta)*KM*Kbl(idx)*Ye*(u(idx)+1))...
-    /(Clb*oblim*pinhao(idx).rotacao*Ka*pinhao(idx).dentes_virtual*Yf*...
-    Ybeta*u(idx))).^(-1/3);
+mn_fad(idx) = ((19600*P_motor_catalogo*cos(beta)*KM*Kbl(idx)*Ye)/(Clb*oblim...
+    *pinhao(idx).rotacao*Ka*pinhao(idx).dentes_virtual*Yf*Ybeta)...
+    *((u(idx))+1)/u(idx)).^(1/3);
 mn_hertz(idx) = ((60000*P_motor_catalogo*cos(beta)*KM*2*E*(u(idx)+1))...
     /((pi^2)*Clb*(ohlim^2)*pinhao(idx).rotacao*Ka*pinhao(idx).dentes_virtual...
-    *Khl(idx)*sin(2*alpha)*(1-v^2)*u(idx)))^(-1/3);
+    *Khl(idx)*sin(2*alpha)*(1-v^2)*u(idx)))^(1/3);
 
 
 if mn_fad(idx) > mn_hertz(idx)
     mn(idx) = 1;
 else
-    mn(idx) = 0.3;
+    mn(idx) = 5;
 end
 
 %calculo das variáveis dependentes do módulo para o pinhão e roda
@@ -186,18 +186,18 @@ pinhao(idx).dentes_virtual = pinhao(idx).dentes/cos(beta)^3;
 
 % Cálculo do módulo
 
-mn_fad(idx) = ((19600*P_motor_catalogo*cos(beta)*KM*Kbl(idx)*Ye*(u(idx)+1))...
-    /(Clb*oblim*pinhao(idx).rotacao*Ka*pinhao(idx).dentes_virtual*Yf*...
-    Ybeta*u(idx))).^(-1/3);
+mn_fad(idx) = ((19600*P_motor_catalogo*cos(beta)*KM*Kbl(idx)*Ye)/(Clb*oblim...
+    *pinhao(idx).rotacao*Ka*pinhao(idx).dentes_virtual*Yf*Ybeta)...
+    *((u(idx))+1)/u(idx)).^(1/3);
 mn_hertz(idx) = ((60000*P_motor_catalogo*cos(beta)*KM*2*E*(u(idx)+1))...
     /((pi^2)*Clb*(ohlim^2)*pinhao(idx).rotacao*Ka*pinhao(idx).dentes_virtual...
-    *Khl(idx)*sin(2*alpha)*(1-v^2)*u(idx)))^(-1/3);
+    *Khl(idx)*sin(2*alpha)*(1-v^2)*u(idx)))^(1/3);
 
 
 if mn_fad(idx) > mn_hertz(idx)
-    mn(idx) = 1;
+    mn(idx) = 1.25;
 else
-    mn(idx) = 0.3;
+    mn(idx) = 5;
 end
 
 %calculo das variáveis dependentes do módulo para o pinhão e roda
