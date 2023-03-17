@@ -4,7 +4,9 @@
 
 ### gear_defenition
 
-Este ficheiro possui o código base para o dimensionamento de engrenagens
+Este ficheiro possui o código base para o dimensionamento de engrenagens.
+
+V3 - Equação dos módulos corrigida e módulos estão agora corretos
 
 ### problem_variables
 
