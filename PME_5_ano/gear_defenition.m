@@ -35,7 +35,7 @@ U_total = w_entrada/w_saida;
 
 u(1) = 4;
 u(2) = 4;
-u(3) = 2.23;
+u(3) = 2.5;
 
 U_sizing_relation = u(1)*u(2)*u(3);
 

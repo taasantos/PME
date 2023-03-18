@@ -20,6 +20,11 @@ Este ficheiro possui o código base para o dimensionamento de engrenagens.
 
 Estas alterações mudaram os valores todos das engrenagens e precisam de ser atualizados no relatório!!
 
+**V5**
+
+	- Alteração do diametro do tambor
+	- Alteração da relação de transmissão o que altera o resto dos valores todos
+
 ---
 
 Para verem os parametros das rodas e dos pinhões usar:
