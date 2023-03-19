@@ -153,7 +153,7 @@ mn_hertz(idx) = ((60000*P_motor_catalogo*cos(beta)*KM*2*E(idx)*(u(idx)+1))...
 
 
 if mn_fad(idx) > mn_hertz(idx)
-    mn(idx) = 1.25;
+    mn(idx) = 1.50;
 else
     mn(idx) = 6;
 end
@@ -174,7 +174,7 @@ pinhao(idx).diametro_primitivo = pinhao(idx).dentes*mt(idx);
 pinhao(idx).diametro_base = pinhao(idx).diametro_primitivo*cos(alpha_t);
 pinhao(idx).diametro_pe_dente = pinhao(idx).diametro_primitivo-2*hf(idx);
 pinhao(idx).diametro_externo = pinhao(idx).diametro_primitivo+2*mn(idx);
-pinhao(idx).largura = 20; % valores assumidos e a serem alterados nos cálculos da fadiga
+pinhao(idx).largura = 60; % valores assumidos e a serem alterados nos cálculos da fadiga
 pinhao(idx).largura_dentado = pinhao(idx).largura/cos(beta);
 
 % Cálculo dos parametros da roda da primeira engrenagem 
