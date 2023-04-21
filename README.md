@@ -25,6 +25,14 @@ Estas alterações mudaram os valores todos das engrenagens e precisam de ser at
 	- Alteração do diametro do tambor
 	- Alteração da relação de transmissão o que altera o resto dos valores todos
 
+**V6**
+
+	- Alteração do diametro do tambor
+	- Alteração dos angulos de engrenamento
+	- Alteração do número de dentes
+	- Alteração do módulo normalizado
+	- Alteração do material da ultima engrenagem
+
 ---
 
 Para verem os parametros das rodas e dos pinhões usar:
