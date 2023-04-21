@@ -42,34 +42,42 @@ U_sizing_relation = u(1)*u(2)*u(3);
 %% Defenição de constantes para o cálculo do pinhão e das rodas
 
 % 20 anos, 300 dias, 8h, 60min, w de cada andar rpm
-Nciclos(1) = 20*300*8*60*w_entrada;
-Nciclos(2) = 20*300*8*60*w_entrada/u(1);
-Nciclos(3) = 20*300*8*60*w_entrada/u(2);
+Nciclos(1) = 20*250*4*60*w_entrada;
+Nciclos(2) = 20*250*4*60*w_entrada/u(1);
+Nciclos(3) = 20*250*4*60*w_entrada/u(2);
 
-beta = deg2rad(20); % graus
-alpha = deg2rad(20); % graus
-alpha_t = atan(tan(alpha)/cos(beta)); % graus
+beta(1) = deg2rad(20); % graus para radianos 
+beta(2) = deg2rad(35);
+beta(3) = deg2rad(40);
+alpha = deg2rad(20); % graus para radianos
+alpha_t(1) = atan(tan(alpha)/cos(beta(1))); % radianos
+alpha_t(2) = atan(tan(alpha)/cos(beta(2)));
+alpha_t(3) = atan(tan(alpha)/cos(beta(3)));
 KM = 1; % uniforme / uniforme
 Kbl(1) = log10(Nciclos(1))/8;
 Kbl(2) = log10(Nciclos(2))/8;
 Kbl(3) = log10(Nciclos(3))/8;
 Ye(1) = 1/1.5222; 
-Ye(2) = 1/1.5222;
-Ye(3) = 1/1.5570;
+Ye(2) = 0.8;
+Ye(3) = 0.8;
 CL = 10; % Redutores P<=10kW; Mecânica Geral;
-Clb = CL/cos(beta);
+Clb(1) = CL/cos(beta(1));
+Clb(2) = CL/cos(beta(2));
+Clb(3) = CL/cos(beta(3));
 Ka = 1; % Assumidos L/d1 < 0
 Yf = 0.4; %assumido inicialmente n correção
-Ybeta = 1/cos(beta);
+Ybeta(1) = 1/cos(beta(1));
+Ybeta(2) = 1/cos(beta(2));
+Ybeta(3) = 1/cos(beta(3));
 Khl(1) = 8/log10(Nciclos(1));
 Khl(2) = 8/log10(Nciclos(2));
 Khl(3) = 8/log10(Nciclos(3));
 oblim(1) = 240; % MPa - aço ao carbono C45
 oblim(2) = 285; % MPa - aço ao carbono temperado (óleo) 33Mn5
-oblim(3) = 410; % MPa - aço ligado temperado 34NiCrMo6
+oblim(3) = 285; % MPa - aço ao carbono temperado (óleo) 33Mn5
 ohlim(1) = 500; % MPa - aço ao carbono C45
 ohlim(2) = 745; % MPa - aço ao carbono temperado (óleo) 33Mn5
-ohlim(3) = 1260; % MPa - aço ligado temperado 34NiCrMo6
+ohlim(3) = 745; % MPa - aço ao carbono temperado (óleo) 33Mn5
 E(1) = 200000;%MPa
 E(2) = 210000;%MPa
 E(3) = 210000;%MPa
@@ -83,15 +91,15 @@ idx = 1; % primeira engrenagem
 
 pinhao(idx).dentes = 17;
 pinhao(idx).rotacao = w_entrada; %rpm
-pinhao(idx).dentes_virtual = pinhao(idx).dentes/cos(beta)^3;
+pinhao(idx).dentes_virtual = pinhao(idx).dentes/(cos(beta(idx))^3);
 
 % Cálculo do módulo
 
-mn_fad(idx) = ((19600*P_motor_catalogo*cos(beta)*KM*Kbl(idx)*Ye(idx))/(Clb*oblim(idx)...
-    *pinhao(idx).rotacao*Ka*pinhao(idx).dentes_virtual*Yf*Ybeta)...
-    *((u(idx))+1)/u(idx)).^(1/3);
-mn_hertz(idx) = ((60000*P_motor_catalogo*cos(beta)*KM*2*E(idx)*(u(idx)+1))...
-    /((pi^2)*Clb*(ohlim(idx)^2)*pinhao(idx).rotacao*Ka*pinhao(idx).dentes_virtual...
+mn_fad(idx) = ((19600*P_motor_catalogo*cos(beta(idx))*KM*Khl(idx)*Ye(idx)*(u(idx)+1))/...
+    (Clb(idx)*oblim(idx)*pinhao(idx).rotacao*Ka*pinhao(idx).dentes_virtual*Yf*Ybeta(idx)...
+    *u(idx)))^(1/3);
+mn_hertz(idx) = ((60000*P_motor_catalogo*cos(beta(idx))*KM*2*E(idx)*(u(idx)+1))...
+    /((pi^2)*Clb(idx)*(ohlim(idx)^2)*pinhao(idx).rotacao*Ka*pinhao(idx).dentes_virtual...
     *Khl(idx)*sin(2*alpha)*(1-v^2)*u(idx)))^(1/3);
 
 if mn_fad(idx) > mn_hertz(idx)
@@ -102,7 +110,7 @@ end
 
 %calculo das variáveis dependentes do módulo para o pinhão e roda
 
-mt(idx) = mn(idx)/cos(beta);
+mt(idx) = mn(idx)/cos(beta(idx));
 passo(idx) = mn(idx)*pi;
 passo_aparente(idx) = mt(idx)*pi;
 hz(idx) = 2.25*mn(idx);
@@ -113,22 +121,22 @@ s(idx) = 0.25*mn(idx);
 % Cálculo do resto dos valores do pinhão
 
 pinhao(idx).diametro_primitivo = pinhao(idx).dentes*mt(idx);
-pinhao(idx).diametro_base = pinhao(idx).diametro_primitivo*cos(alpha_t);
+pinhao(idx).diametro_base = pinhao(idx).diametro_primitivo*cos(alpha_t(idx));
 pinhao(idx).diametro_pe_dente = pinhao(idx).diametro_primitivo-2*hf;
 pinhao(idx).diametro_externo = pinhao(idx).diametro_primitivo+2*mn(idx);
 pinhao(idx).largura = 20; % valores assumidos e a serem alterados nos cálculos da fadiga
-pinhao(idx).largura_dentado = pinhao(idx).largura/cos(beta);
+pinhao(idx).largura_dentado = pinhao(idx).largura/cos(beta(idx));
 
 % Cálculo dos parametros da roda da primeira engrenagem 
 
 roda(idx).dentes = u(idx)*pinhao(idx).dentes;
-roda(idx).dentes_virtual = roda(idx).dentes/cos(beta)^3;
+roda(idx).dentes_virtual = roda(idx).dentes/cos(beta(idx))^3;
 roda(idx).diametro_primitivo = roda(idx).dentes*mt(idx);
-roda(idx).diametro_base = roda(idx).diametro_primitivo*cos(alpha_t);
+roda(idx).diametro_base = roda(idx).diametro_primitivo*cos(alpha_t(idx));
 roda(idx).diametro_pe_dente = roda(idx).diametro_primitivo-2*hf;
 roda(idx).diametro_externo = roda(idx).diametro_primitivo+2*mn(idx);
 roda(idx).largura = 20; % valores assumidos e a serem alterados nos cálculos da fadiga
-roda(idx).largura_dentado = roda(idx).largura/cos(beta);
+roda(idx).largura_dentado = roda(idx).largura/cos(beta(idx));
 
 % Cálculo do entre eixo da primeira engrenagem
 
@@ -138,29 +146,29 @@ idx = 2; % Segunda engrenagem
 
 % Defenição dos valores iniciais do pinhão para o cálculo do módulo
 
-pinhao(idx).dentes = 17;
+pinhao(idx).dentes = 19;
 pinhao(idx).rotacao = pinhao(idx-1).rotacao/u(1); %rpm
-pinhao(idx).dentes_virtual = pinhao(idx).dentes/cos(beta)^3;
+pinhao(idx).dentes_virtual = pinhao(idx).dentes/cos(beta(idx))^3;
 
 % Cálculo do módulo
 
-mn_fad(idx) = ((19600*P_motor_catalogo*cos(beta)*KM*Kbl(idx)*Ye(idx))/(Clb*oblim(idx)...
-    *pinhao(idx).rotacao*Ka*pinhao(idx).dentes_virtual*Yf*Ybeta)...
-    *((u(idx))+1)/u(idx)).^(1/3);
-mn_hertz(idx) = ((60000*P_motor_catalogo*cos(beta)*KM*2*E(idx)*(u(idx)+1))...
-    /((pi^2)*Clb*(ohlim(idx)^2)*pinhao(idx).rotacao*Ka*pinhao(idx).dentes_virtual...
+mn_fad(idx) = ((19600*P_motor_catalogo*cos(beta(idx))*KM*Khl(idx)*Ye(idx)*(u(idx)+1))/...
+    (Clb(idx)*oblim(idx)*pinhao(idx).rotacao*Ka*pinhao(idx).dentes_virtual*Yf*Ybeta(idx)...
+    *u(idx)))^(1/3);
+mn_hertz(idx) = ((60000*P_motor_catalogo*cos(beta(idx))*KM*2*E(idx)*(u(idx)+1))...
+    /((pi^2)*Clb(idx)*(ohlim(idx)^2)*pinhao(idx).rotacao*Ka*pinhao(idx).dentes_virtual...
     *Khl(idx)*sin(2*alpha)*(1-v^2)*u(idx)))^(1/3);
 
 
 if mn_fad(idx) > mn_hertz(idx)
-    mn(idx) = 1.50;
+    mn(idx) = 1.0;
 else
-    mn(idx) = 6;
+    mn(idx) = 4.5;
 end
 
 %calculo das variáveis dependentes do módulo para o pinhão e roda
 
-mt(idx) = mn(idx)/cos(beta);
+mt(idx) = mn(idx)/cos(beta(idx));
 passo(idx) = mn(idx)*pi;
 passo_aparente(idx) = mt(idx)*pi;
 hz(idx) = 2.25*mn(idx);
@@ -175,18 +183,18 @@ pinhao(idx).diametro_base = pinhao(idx).diametro_primitivo*cos(alpha_t);
 pinhao(idx).diametro_pe_dente = pinhao(idx).diametro_primitivo-2*hf(idx);
 pinhao(idx).diametro_externo = pinhao(idx).diametro_primitivo+2*mn(idx);
 pinhao(idx).largura = 60; % valores assumidos e a serem alterados nos cálculos da fadiga
-pinhao(idx).largura_dentado = pinhao(idx).largura/cos(beta);
+pinhao(idx).largura_dentado = pinhao(idx).largura/cos(beta(idx));
 
 % Cálculo dos parametros da roda da primeira engrenagem 
 
 roda(idx).dentes = u(idx)*pinhao(idx).dentes;
-roda(idx).dentes_virtual = roda(idx).dentes/cos(beta)^3;
+roda(idx).dentes_virtual = roda(idx).dentes/cos(beta(idx))^3;
 roda(idx).diametro_primitivo = roda(idx).dentes*mt(idx);
-roda(idx).diametro_base = roda(idx).diametro_primitivo*cos(alpha_t);
+roda(idx).diametro_base = roda(idx).diametro_primitivo*cos(alpha_t(idx));
 roda(idx).diametro_pe_dente = roda(idx).diametro_primitivo-2*hf(idx);
 roda(idx).diametro_externo = roda(idx).diametro_primitivo+2*mn(idx);
 roda(idx).largura = 60; % valores assumidos e a serem alterados nos cálculos da fadiga
-roda(idx).largura_dentado = roda(idx).largura/cos(beta);
+roda(idx).largura_dentado = roda(idx).largura/cos(beta(idx));
 
 % Cálculo do entre eixo da primeira engrenagem
 
@@ -196,29 +204,29 @@ idx = 3; % terceira engrenagem
 
 % Defenição dos valores iniciais do pinhão para o cálculo do módulo
 
-pinhao(idx).dentes = 26;
+pinhao(idx).dentes = 25;
 pinhao(idx).rotacao = pinhao(idx-1).rotacao/u(2); %rpm
-pinhao(idx).dentes_virtual = pinhao(idx).dentes/cos(beta)^3;
+pinhao(idx).dentes_virtual = pinhao(idx).dentes/cos(beta(idx))^3;
 
 % Cálculo do módulo
 
-mn_fad(idx) = ((19600*P_motor_catalogo*cos(beta)*KM*Kbl(idx)*Ye(idx))/(Clb*oblim(idx)...
-    *pinhao(idx).rotacao*Ka*pinhao(idx).dentes_virtual*Yf*Ybeta)...
-    *((u(idx))+1)/u(idx)).^(1/3);
-mn_hertz(idx) = ((60000*P_motor_catalogo*cos(beta)*KM*2*E(idx)*(u(idx)+1))...
-    /((pi^2)*Clb*(ohlim(idx)^2)*pinhao(idx).rotacao*Ka*pinhao(idx).dentes_virtual...
+mn_fad(idx) = ((19600*P_motor_catalogo*cos(beta(idx))*KM*Khl(idx)*Ye(idx)*(u(idx)+1))/...
+    (Clb(idx)*oblim(idx)*pinhao(idx).rotacao*Ka*pinhao(idx).dentes_virtual*Yf*Ybeta(idx)...
+    *u(idx)))^(1/3);
+mn_hertz(idx) = ((60000*P_motor_catalogo*cos(beta(idx))*KM*2*E(idx)*(u(idx)+1))...
+    /((pi^2)*Clb(idx)*(ohlim(idx)^2)*pinhao(idx).rotacao*Ka*pinhao(idx).dentes_virtual...
     *Khl(idx)*sin(2*alpha)*(1-v^2)*u(idx)))^(1/3);
 
 
 if mn_fad(idx) > mn_hertz(idx)
-    mn(idx) = 2;
+    mn(idx) = 1.25;
 else
     mn(idx) = 6;
 end
 
 %calculo das variáveis dependentes do módulo para o pinhão e roda
 
-mt(idx) = mn(idx)/cos(beta);
+mt(idx) = mn(idx)/cos(beta(idx));
 passo(idx) = mn(idx)*pi;
 passo_aparente(idx) = mt(idx)*pi;
 hz(idx) = 2.25*mn(idx);
@@ -229,22 +237,22 @@ s(idx) = 0.25*mn(idx);
 % Cálculo do resto dos valores do pinhão
 
 pinhao(idx).diametro_primitivo = pinhao(idx).dentes*mt(idx);
-pinhao(idx).diametro_base = pinhao(idx).diametro_primitivo*cos(alpha_t);
+pinhao(idx).diametro_base = pinhao(idx).diametro_primitivo*cos(alpha_t(idx));
 pinhao(idx).diametro_pe_dente = pinhao(idx).diametro_primitivo-2*hf(idx);
 pinhao(idx).diametro_externo = pinhao(idx).diametro_primitivo+2*mn(idx);
 pinhao(idx).largura = 60; % valores assumidos e a serem alterados nos cálculos da fadiga
-pinhao(idx).largura_dentado = pinhao(idx).largura/cos(beta);
+pinhao(idx).largura_dentado = pinhao(idx).largura/cos(beta(idx));
 
 % Cálculo dos parametros da roda da primeira engrenagem 
 
 roda(idx).dentes = ceil(u(idx)*pinhao(idx).dentes);
-roda(idx).dentes_virtual = roda(idx).dentes/cos(beta)^3;
+roda(idx).dentes_virtual = roda(idx).dentes/cos(beta(idx))^3;
 roda(idx).diametro_primitivo = roda(idx).dentes*mt(idx);
-roda(idx).diametro_base = roda(idx).diametro_primitivo*cos(alpha_t);
+roda(idx).diametro_base = roda(idx).diametro_primitivo*cos(alpha_t(idx));
 roda(idx).diametro_pe_dente = roda(idx).diametro_primitivo-2*hf(idx);
 roda(idx).diametro_externo = roda(idx).diametro_primitivo+2*mn(idx);
 roda(idx).largura = 20; % valores assumidos e a serem alterados nos cálculos da fadiga
-roda(idx).largura_dentado = roda(idx).largura/cos(beta);
+roda(idx).largura_dentado = roda(idx).largura/cos(beta(idx));
 
 % Cálculo do entre eixo da primeira engrenagem
 
