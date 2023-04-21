@@ -4,11 +4,11 @@
 w_entrada = 1430; % rpm - catálogo prof FF
 a_grav = 9.81; % m/s^2
 m_carga = 250;% kg
-v_elevacao = 0.567;% m/s - 35m/min
+v_elevacao = 0.583;% m/s - 35m/min
 
 % após dimensionamento do cabo - 6x36WS
 
-D_tambor = 0.3048; % m
+D_tambor = 0.312; % m
 dist = D_tambor/2; % m (distância do eixo do tambor)
 
 
