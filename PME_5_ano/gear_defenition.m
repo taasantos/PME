@@ -193,7 +193,7 @@ roda(idx).diametro_primitivo = roda(idx).dentes*mt(idx);
 roda(idx).diametro_base = roda(idx).diametro_primitivo*cos(alpha_t(idx));
 roda(idx).diametro_pe_dente = roda(idx).diametro_primitivo-2*hf(idx);
 roda(idx).diametro_externo = roda(idx).diametro_primitivo+2*mn(idx);
-roda(idx).largura = 60; % valores assumidos e a serem alterados nos cálculos da fadiga
+roda(idx).largura = 40; % valores assumidos e a serem alterados nos cálculos da fadiga
 roda(idx).largura_dentado = roda(idx).largura/cos(beta(idx));
 
 % Cálculo do entre eixo da primeira engrenagem
