@@ -44,3 +44,13 @@ roda(nº de engrenamento)
 ### problem_variables
 
 Este ficheiro possui a defenição das variáveis do problema 
+
+### gear_shafts
+
+Este ficheiro possui o dimensionamento dos veios de transmisssão
+
+**V2**
+
+	- Calculo das forças de engrenamento
+	- Calculo das forças exercidas nos veios
+	- Dimensionamento do X0 Y0, X Y.
