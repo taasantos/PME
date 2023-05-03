@@ -54,3 +54,5 @@ Este ficheiro possui o dimensionamento dos veios de transmisssão
 	- Calculo das forças de engrenamento
 	- Calculo das forças exercidas nos veios
 	- Dimensionamento do X0 Y0, X Y.
+	- Cálculo dos Ps e c0 e c
+	- Determinação dos rolamentos
