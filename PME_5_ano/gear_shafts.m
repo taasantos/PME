@@ -24,6 +24,20 @@ Fx(idx) = Ft(idx)*tan(beta(idx));
 Mz_pinhao(idx) = Fx(idx)*(pinhao(idx).diametro_primitivo*0.001/2);
 Mz_roda(idx) = Fx(idx)*(roda(idx).diametro_primitivo*0.001/2);
 
+Mf_XY(idx) = 235; %N.m
+Mf_ZX(idx) = 155; %N.m
+M_fletor(idx) = sqrt((Mf_ZX(idx)^2)+Mf_XY(idx)^2);
+fs_veio(idx) = 1.5;
+oy(idx) = 430000000; %Pa - aço Ck45 tempera + revenido
+
+    % Critério de cedencia de Tresca
+
+D(idx).tresca = (((32*fs_veio(idx))/(pi*oy(idx))*sqrt((M_fletor(idx)^2)+...
+    M_torsor(idx)^2)))^(1/3); % m
+
+D(idx).von_mises = (((32*fs_veio(idx))/(pi*oy(idx))*sqrt((M_fletor(idx)^2)+...
+    0.75*M_torsor(idx)^2)))^(1/3); % m
+
 R_a_xy(idx) = 100;
 R_b_xy(idx) = 3900;
 
@@ -95,6 +109,20 @@ Fx(idx) = Ft(idx)*tan(beta(idx));
 Mz_pinhao(idx) = Fx(idx)*(pinhao(idx).diametro_primitivo*0.001/2);
 Mz_roda(idx) = Fx(idx)*(roda(idx).diametro_primitivo*0.001/2);
 
+Mf_XY(idx) = 235; %N.m
+Mf_ZX(idx) = 645; %N.m
+M_fletor(idx) = sqrt((Mf_ZX(idx)^2)+Mf_XY(idx)^2);
+fs_veio(idx) = 1.5;
+oy(idx) = 430000000; %Pa - aço Ck45 tempera + revenido
+
+    % Critério de cedencia de Tresca
+
+D(idx).tresca = (((32*fs_veio(idx))/(pi*oy(idx))*sqrt((M_fletor(idx)^2)+...
+    M_torsor(idx)^2)))^(1/3); % m
+
+D(idx).von_mises = (((32*fs_veio(idx))/(pi*oy(idx))*sqrt((M_fletor(idx)^2)+...
+    0.75*M_torsor(idx)^2)))^(1/3); % m
+
 R_a_xy(idx) = 700;
 R_b_xy(idx) = 3400;
 
@@ -165,6 +193,20 @@ Fx(idx) = Ft(idx)*tan(beta(idx));
 Mz_pinhao(idx) = Fx(idx)*(pinhao(idx).diametro_primitivo*0.001/2);
 Mz_roda(idx) = Fx(idx)*(roda(idx).diametro_primitivo*0.001/2);
 
+Mf_XY(idx) = 361; % N.m
+Mf_ZX(idx) = 2111; %N.m
+M_fletor(idx) = sqrt((Mf_ZX(idx)^2)+Mf_XY(idx)^2);
+fs_veio(idx) = 1.5;
+oy(idx) = 750000000; %Pa - aço 42CrMo4 tempera + revenido
+
+    % Critério de cedencia de Tresca
+
+D(idx).tresca = (((32*fs_veio(idx))/(pi*oy(idx))*sqrt((M_fletor(idx)^2)+...
+    M_torsor(idx)^2)))^(1/3); % m
+
+D(idx).von_mises = (((32*fs_veio(idx))/(pi*oy(idx))*sqrt((M_fletor(idx)^2)+...
+    0.75*M_torsor(idx)^2)))^(1/3); % m
+
 R_a_xy(idx) = -7100;
 R_b_xy(idx) = -5700;
 
@@ -225,6 +267,24 @@ C_b(idx) = (fl(idx)/(fn(idx)*ft(idx)))*P_b(idx);
 %Ultimo veio
 
 idx = 4;
+
+v_veio(idx) = 2*pi*(roda(idx-1).diametro_primitivo*0.001/2)*pinhao(idx-1).rotacao/60;
+M_torsor(idx) = P_motor_catalogo/v_veio(idx);
+
+Mf_XY(idx) = 386; % N.m
+Mf_ZX(idx) = 2510; %N.m
+M_fletor(idx) = sqrt((Mf_ZX(idx)^2)+Mf_XY(idx)^2);
+fs_veio(idx) = 1.5;
+oy(idx) = 750000000; %Pa - aço 42CrMo4 tempera + revenido
+
+    % Critério de cedencia de Tresca
+
+D(idx).tresca = (((32*fs_veio(idx))/(pi*oy(idx))*sqrt((M_fletor(idx)^2)+...
+    M_torsor(idx)^2)))^(1/3); % m
+
+D(idx).von_mises = (((32*fs_veio(idx))/(pi*oy(idx))*sqrt((M_fletor(idx)^2)+...
+    0.75*M_torsor(idx)^2)))^(1/3); % m
+
 
 R_a_xy(idx) = -25100;
 R_b_xy(idx) = -33000;
