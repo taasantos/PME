@@ -82,7 +82,7 @@ end
 
 fs(idx) = 1.2; % coefeciente de segurança - normal
 ft(idx) = 1.0; % fator de temperatura - <120º
-fl(idx) = 1.8; % fator de esforço dinâmico - motores elétricos pequenos
+fl(idx) = 1.5; % fator de esforço dinâmico - motores elétricos pequenos
 fn(idx) = 0.281; % fator de rotação - 1500 rpm
 
 P0_a(idx) = X0(idx)*Fr_rolamento_a(idx) + Y0(idx)*Fx(idx);
@@ -140,7 +140,7 @@ Fr_rolamento_b(idx) = sqrt((R_b_xy(idx)^2)+R_b_zy(idx)^2);
 
 alpha_contacto_rol(idx) = deg2rad(40);
 X0(idx) = 0.5;
-Y0(idx) = 0.42;
+Y0(idx) = 0.26;
 razao_forcas_rol_a(idx) = Fx(idx)/Fr_rolamento_a(idx);
 razao_forcas_rol_b(idx) = Fx(idx)/Fr_rolamento_b(idx);
 ceof_carga_axial(idx) = 0.68;
@@ -150,16 +150,16 @@ P0_axial_b(idx) = 2.3*Fr_rolamento_b(idx)*tan(alpha_contacto_rol(idx))...
     + Fx(idx)-Fx(idx-1);
 
 if razao_forcas_rol_a(idx) > ceof_carga_axial(idx)
-    X_a(idx) = 0.41;
-    Y_a(idx) = 0.87;
+    X_a(idx) = 0.35;
+    Y_a(idx) = 0.57;
 else
     X_a(idx) = 1.0;
     Y_a(idx) = 0;
 end
 
 if razao_forcas_rol_b(idx) > ceof_carga_axial(idx)
-    X_b(idx) = 0.41;
-    Y_b(idx) = 0.87;
+    X_b(idx) = 0.35;
+    Y_b(idx) = 0.57;
 else
     X_b(idx) = 1.0;
     Y_b(idx) = 0;
@@ -167,8 +167,8 @@ end
 
 fs(idx) = 1.2; % coefeciente de segurança - normal
 ft(idx) = 1.0; % fator de temperatura - <120º
-fl(idx) = 1.8; % fator de esforço dinâmico - motores elétricos pequenos
-fn(idx) = 0.281; % fator de rotação - 1500 rpm
+fl(idx) = 1.5; % fator de esforço dinâmico - motores elétricos pequenos
+fn(idx) = 0.405; % fator de rotação - 500 rpm
 
 P0_a(idx) = X0(idx)*Fr_rolamento_a(idx) + Y0(idx)*(Fx(idx)-Fx(idx-1));
 C0_a(idx) = fs(idx)*P0_a(idx);
@@ -224,26 +224,26 @@ Fr_rolamento_b(idx) = sqrt((R_b_xy(idx)^2)+R_b_zy(idx)^2);
 
 alpha_contacto_rol(idx) = deg2rad(40);
 X0(idx) = 0.5;
-Y0(idx) = 0.42;
+Y0(idx) = 0.26;
 razao_forcas_rol_a(idx) = Fx(idx)/Fr_rolamento_a(idx);
 razao_forcas_rol_b(idx) = Fx(idx)/Fr_rolamento_b(idx);
-ceof_carga_axial(idx) = 0.68;
+ceof_carga_axial(idx) = 1.14;
 P0_axial_a(idx) = 2.3*Fr_rolamento_a(idx)*tan(alpha_contacto_rol(idx))...
     + Fx(idx)-Fx(idx-1);
 P0_axial_b(idx) = 2.3*Fr_rolamento_b(idx)*tan(alpha_contacto_rol(idx))...
     + Fx(idx)-Fx(idx-1);
 
 if razao_forcas_rol_a(idx) > ceof_carga_axial(idx)
-    X_a(idx) = 0.41;
-    Y_a(idx) = 0.87;
+    X_a(idx) = 0.35;
+    Y_a(idx) = 0.57;
 else
     X_a(idx) = 1.0;
     Y_a(idx) = 0;
 end
 
 if razao_forcas_rol_b(idx) > ceof_carga_axial(idx)
-    X_b(idx) = 0.41;
-    Y_b(idx) = 0.87;
+    X_b(idx) = 0.35;
+    Y_b(idx) = 0.57;
 else
     X_b(idx) = 1.0;
     Y_b(idx) = 0;
@@ -251,8 +251,8 @@ end
 
 fs(idx) = 1.2; % coefeciente de segurança - normal
 ft(idx) = 1.0; % fator de temperatura - <120º
-fl(idx) = 1.8; % fator de esforço dinâmico - motores elétricos pequenos
-fn(idx) = 0.281; % fator de rotação - 1500 rpm
+fl(idx) = 1.5; % fator de esforço dinâmico - motores elétricos pequenos
+fn(idx) = 0.693; % fator de rotação - 100 rpm
 
 P0_a(idx) = X0(idx)*Fr_rolamento_a(idx) + Y0(idx)*(Fx(idx)-Fx(idx-1));
 C0_a(idx) = fs(idx)*P0_a(idx);
@@ -303,26 +303,26 @@ Fr_rolamento_b(idx) = sqrt((R_b_xy(idx)^2)+R_b_zy(idx)^2);
 
 alpha_contacto_rol(idx) = deg2rad(40);
 X0(idx) = 0.5;
-Y0(idx) = 0.42;
+Y0(idx) = 0.26;
 razao_forcas_rol_a(idx) = Fx(idx-1)/Fr_rolamento_a(idx);
 razao_forcas_rol_b(idx) = Fx(idx-1)/Fr_rolamento_b(idx);
-ceof_carga_axial(idx) = 0.68;
+ceof_carga_axial(idx) = 1.14;
 P0_axial_a(idx) = 2.3*Fr_rolamento_a(idx)*tan(alpha_contacto_rol(idx))...
     + Fx(idx-1);
 P0_axial_b(idx) = 2.3*Fr_rolamento_b(idx)*tan(alpha_contacto_rol(idx))...
     + Fx(idx-1);
 
 if razao_forcas_rol_a(idx) > ceof_carga_axial(idx)
-    X_a(idx) = 0.41;
-    Y_a(idx) = 0.87;
+    X_a(idx) = 0.35;
+    Y_a(idx) = 0.57;
 else
     X_a(idx) = 1.0;
     Y_a(idx) = 0;
 end
 
 if razao_forcas_rol_b(idx) > ceof_carga_axial(idx)
-    X_b(idx) = 0.41;
-    Y_b(idx) = 0.87;
+    X_b(idx) = 0.35;
+    Y_b(idx) = 0.57;
 else
     X_b(idx) = 1.0;
     Y_b(idx) = 0;
@@ -330,8 +330,8 @@ end
 
 fs(idx) = 1.2; % coefeciente de segurança - normal
 ft(idx) = 1.0; % fator de temperatura - <120º
-fl(idx) = 1.8; % fator de esforço dinâmico - motores elétricos pequenos
-fn(idx) = 0.281; % fator de rotação - 1500 rpm
+fl(idx) = 1.5; % fator de esforço dinâmico - acionamento motores
+fn(idx) = 0.693; % fator de rotação - 1500 rpm
 
 P0_a(idx) = X0(idx)*Fr_rolamento_a(idx) + Y0(idx)*Fx(idx-1);
 C0_a(idx) = fs(idx)*P0_a(idx);
