@@ -47,31 +47,34 @@ R_b_zy(idx) = 5900;
 Fr_rolamento_a(idx) = sqrt((R_a_xy(idx)^2)+R_a_zy(idx)^2);
 Fr_rolamento_b(idx) = sqrt((R_b_xy(idx)^2)+R_b_zy(idx)^2);
 
-    % Para este caso, optou-se por rolamentos de carreira simples com
+    % Para este caso, optou-se por rolamentos de carreira dupla com
     % contactoangular de 25º para o 1º e 2º apoio (inicialmente)
 
-alpha_contacto_rol(idx) = deg2rad(25);
+alpha_contacto_rol(idx) = deg2rad(40);
 X0(idx) = 0.5;
-Y0(idx) = 0.42;
+Y0(idx) = 0.26;
+
 razao_forcas_rol_a(idx) = Fx(idx)/Fr_rolamento_a(idx);
 razao_forcas_rol_b(idx) = Fx(idx)/Fr_rolamento_b(idx);
-ceof_carga_axial(idx) = 0.68;
+
+ceof_carga_axial(idx) = 1.14;
+
 P0_axial_a(idx) = 2.3*Fr_rolamento_a(idx)*tan(alpha_contacto_rol(idx))...
     + Fx(idx);
 P0_axial_b(idx) = 2.3*Fr_rolamento_b(idx)*tan(alpha_contacto_rol(idx))...
     + Fx(idx);
 
 if razao_forcas_rol_a(idx) > ceof_carga_axial(idx)
-    X_a(idx) = 0.41;
-    Y_a(idx) = 0.87;
+    X_a(idx) = 0.35;
+    Y_a(idx) = 0.57;
 else
     X_a(idx) = 1.0;
     Y_a(idx) = 0;
 end
 
 if razao_forcas_rol_b(idx) > ceof_carga_axial(idx)
-    X_b(idx) = 0.41;
-    Y_b(idx) = 0.87;
+    X_b(idx) = 0.35;
+    Y_b(idx) = 0.57;
 else
     X_b(idx) = 1.0;
     Y_b(idx) = 0;
@@ -135,7 +138,7 @@ Fr_rolamento_b(idx) = sqrt((R_b_xy(idx)^2)+R_b_zy(idx)^2);
     % Para este caso, optou-se por rolamentos de carreira simples com
     % contactoangular de 25º para o 1º e 2º apoio (inicialmente)
 
-alpha_contacto_rol(idx) = deg2rad(25);
+alpha_contacto_rol(idx) = deg2rad(40);
 X0(idx) = 0.5;
 Y0(idx) = 0.42;
 razao_forcas_rol_a(idx) = Fx(idx)/Fr_rolamento_a(idx);
@@ -219,7 +222,7 @@ Fr_rolamento_b(idx) = sqrt((R_b_xy(idx)^2)+R_b_zy(idx)^2);
     % Para este caso, optou-se por rolamentos de carreira simples com
     % contactoangular de 25º para o 1º e 2º apoio (inicialmente)
 
-alpha_contacto_rol(idx) = deg2rad(25);
+alpha_contacto_rol(idx) = deg2rad(40);
 X0(idx) = 0.5;
 Y0(idx) = 0.42;
 razao_forcas_rol_a(idx) = Fx(idx)/Fr_rolamento_a(idx);
@@ -298,7 +301,7 @@ Fr_rolamento_b(idx) = sqrt((R_b_xy(idx)^2)+R_b_zy(idx)^2);
     % Para este caso, optou-se por rolamentos de carreira simples com
     % contactoangular de 25º para o 1º e 2º apoio (inicialmente)
 
-alpha_contacto_rol(idx) = deg2rad(25);
+alpha_contacto_rol(idx) = deg2rad(40);
 X0(idx) = 0.5;
 Y0(idx) = 0.42;
 razao_forcas_rol_a(idx) = Fx(idx-1)/Fr_rolamento_a(idx);
