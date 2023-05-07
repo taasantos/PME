@@ -97,6 +97,25 @@ C_a(idx) = (fl(idx)/(fn(idx)*ft(idx)))*P_a(idx);
 P_b(idx) = X_b(idx)*Fr_rolamento_b(idx) + Y_b(idx)*Fx(idx);
 C_b(idx) = (fl(idx)/(fn(idx)*ft(idx)))*P_b(idx);
 
+    % Dimensionamento de chaveta
+
+D_veio(idx) = 0.035; % 30<d<38
+
+t_corte(idx) = 85000000; % MPa
+t_esmagamento(idx) = 80000000;
+
+b_chaveta(idx) = 10;
+h_chaveta(idx) = 8;
+t1_chaveta(idx) = 5;
+t2_chaveta(idx) = 3.3;
+
+L_min_t_corte(idx) = (2*M_torsor(idx))/(t_corte(idx)*b_chaveta(idx)*...
+    D_veio(idx)); % m
+L_min_t_esmagamento(idx) = (2*M_torsor(idx))/(t_esmagamento(idx)*...
+    D_veio(idx)*(h_chaveta(idx)-t1_chaveta(idx))); % m
+
+L_escolhida_pinhao(idx) = 0.025; % m
+
 % Forças de engrenamento para o par Z3 e Z4 em N
 
 idx = 2;
@@ -182,6 +201,26 @@ C_a(idx) = (fl(idx)/(fn(idx)*ft(idx)))*P_a(idx);
 P_b(idx) = X_b(idx)*Fr_rolamento_b(idx) + Y_b(idx)*(Fx(idx)-Fx(idx-1));
 C_b(idx) = (fl(idx)/(fn(idx)*ft(idx)))*P_b(idx);
 
+    % Dimensionamento de chaveta
+
+D_veio(idx) = 0.025; % 30<d<38
+
+t_corte(idx) = 85000000; % MPa
+t_esmagamento(idx) = 80000000;
+
+b_chaveta(idx) = 8;
+h_chaveta(idx) = 7;
+t1_chaveta(idx) = 4;
+t2_chaveta(idx) = 3.3;
+
+L_min_t_corte(idx) = (2*M_torsor(idx))/(t_corte(idx)*b_chaveta(idx)*...
+    D_veio(idx)); % m
+L_min_t_esmagamento(idx) = (2*M_torsor(idx))/(t_esmagamento(idx)*...
+    D_veio(idx)*(h_chaveta(idx)-t1_chaveta(idx))); % m
+
+L_escolhida_roda(idx) = 0.025; % m
+L_escolhida_pinhao(idx) = 0.050; % m
+
 % Forças de engrenamento para o par Z5 e Z6 em N
 
 idx = 3;
@@ -266,6 +305,26 @@ C_a(idx) = (fl(idx)/(fn(idx)*ft(idx)))*P_a(idx);
 P_b(idx) = X_b(idx)*Fr_rolamento_b(idx) + Y_b(idx)*(Fx(idx)-Fx(idx-1));
 C_b(idx) = (fl(idx)/(fn(idx)*ft(idx)))*P_b(idx);
 
+    % Dimensionamento de chaveta
+
+D_veio(idx) = 0.025; % 30<d<38
+
+t_corte(idx) = 85000000; % MPa
+t_esmagamento(idx) = 80000000;
+
+b_chaveta(idx) = 8;
+h_chaveta(idx) = 7;
+t1_chaveta(idx) = 4;
+t2_chaveta(idx) = 3.3;
+
+L_min_t_corte(idx) = (2*M_torsor(idx))/(t_corte(idx)*b_chaveta(idx)*...
+    D_veio(idx)); % m
+L_min_t_esmagamento(idx) = (2*M_torsor(idx))/(t_esmagamento(idx)*...
+    D_veio(idx)*(h_chaveta(idx)-t1_chaveta(idx))); % m
+
+L_escolhida_roda(idx) = 0.050; % m
+L_escolhida_pinhao(idx) = 0.050; % m
+
 
 %Ultimo veio
 
@@ -345,4 +404,23 @@ C_a(idx) = (fl(idx)/(fn(idx)*ft(idx)))*P_a(idx);
 P_b(idx) = X_b(idx)*Fr_rolamento_b(idx) + Y_b(idx)*Fx(idx-1);
 C_b(idx) = (fl(idx)/(fn(idx)*ft(idx)))*P_b(idx);
 
+    % Dimensionamento de chaveta
+
+D_veio(idx) = 0.055; % 30<d<38
+
+t_corte(idx) = 85000000; % MPa
+t_esmagamento(idx) = 80000000;
+
+b_chaveta(idx) = 16;
+h_chaveta(idx) = 10;
+t1_chaveta(idx) = 6;
+t2_chaveta(idx) = 4.3;
+
+L_min_t_corte(idx) = (2*M_torsor(idx))/(t_corte(idx)*b_chaveta(idx)*...
+    D_veio(idx));
+L_min_t_esmagamento(idx) = (2*M_torsor(idx))/(t_esmagamento(idx)*...
+    D_veio(idx)*(h_chaveta(idx)-t1_chaveta(idx)));
+
+L_escolhida_roda(idx) = 0.025; % m
+L_escolhida_pinhao(idx) = 0.050; % m
 
