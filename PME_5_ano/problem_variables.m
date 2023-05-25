@@ -1,7 +1,7 @@
 %% Variáveis do projecto
 
 
-w_entrada = 1430; % rpm - catálogo prof FF
+w_entrada = 855; % rpm - catálogo Weg motores 900 RPM 1.5KW
 a_grav = 9.81; % m/s^2
 m_carga = 250;% kg
 v_elevacao = 0.583;% m/s - 35m/min
