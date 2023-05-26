@@ -179,7 +179,7 @@ s(idx) = 0.25*mn(idx);
 % Cálculo do resto dos valores do pinhão
 
 pinhao(idx).diametro_primitivo = pinhao(idx).dentes*mt(idx);
-pinhao(idx).diametro_base = pinhao(idx).diametro_primitivo*cos(alpha_t);
+pinhao(idx).diametro_base = pinhao(idx).diametro_primitivo*cos(alpha_t(idx));
 pinhao(idx).diametro_pe_dente = pinhao(idx).diametro_primitivo-2*hf(idx);
 pinhao(idx).diametro_externo = pinhao(idx).diametro_primitivo+2*mn(idx);
 pinhao(idx).largura = 60; % valores assumidos e a serem alterados nos cálculos da fadiga
