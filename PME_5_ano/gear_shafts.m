@@ -38,30 +38,35 @@ D(idx).tresca = (((32*fs_veio(idx))/(pi*oy(idx))*sqrt((M_fletor(idx)^2)+...
 D(idx).von_mises = (((32*fs_veio(idx))/(pi*oy(idx))*sqrt((M_fletor(idx)^2)+...
     0.75*M_torsor(idx)^2)))^(1/3); % m
 
-R_a_xy(idx) = 100;
-R_b_xy(idx) = 3900;
+R_a_xy(idx) = 103;
+R_b_xy(idx) = 3862;
 
-R_a_zy(idx) = -3900;
-R_b_zy(idx) = 5900;
+R_a_zy(idx) = -3920;
+R_b_zy(idx) = 5880;
 
 Fr_rolamento_a(idx) = sqrt((R_a_xy(idx)^2)+R_a_zy(idx)^2);
 Fr_rolamento_b(idx) = sqrt((R_b_xy(idx)^2)+R_b_zy(idx)^2);
 
-    % Para este caso, optou-se por rolamentos de carreira dupla com
-    % contactoangular de 25º para o 1º e 2º apoio (inicialmente)
+    % Para este caso, optou-se por rolamento de esferas contacto angular de
+    % 40º para o primeiro apoio e cilindros cónicos com 15º de carreira simples
+    % para o segundo.
 
 alpha_contacto_rol(idx) = deg2rad(40);
-X0(idx) = 0.5;
-Y0(idx) = 0.26;
+alpha_contacto_rol_cilindro(idx) = deg2rad(15);
+
+X0_a(idx) = 0.5;
+Y0_a(idx) = 0.26;
+
+X0_b(idx) = 0.5;
+Y0_b(idx) = 0.22*cot(alpha_contacto_rol_cilindro(idx));
 
 razao_forcas_rol_a(idx) = Fx(idx)/Fr_rolamento_a(idx);
 razao_forcas_rol_b(idx) = Fx(idx)/Fr_rolamento_b(idx);
 
 ceof_carga_axial(idx) = 1.14;
+ceof_carga_axial_cilindro(idx)= 1.5*tan(alpha_contacto_rol_cilindro);
 
 P0_axial_a(idx) = 2.3*Fr_rolamento_a(idx)*tan(alpha_contacto_rol(idx))...
-    + Fx(idx);
-P0_axial_b(idx) = 2.3*Fr_rolamento_b(idx)*tan(alpha_contacto_rol(idx))...
     + Fx(idx);
 
 if razao_forcas_rol_a(idx) > ceof_carga_axial(idx)
@@ -72,9 +77,9 @@ else
     Y_a(idx) = 0;
 end
 
-if razao_forcas_rol_b(idx) > ceof_carga_axial(idx)
-    X_b(idx) = 0.35;
-    Y_b(idx) = 0.57;
+if razao_forcas_rol_b(idx) > ceof_carga_axial_cilindro(idx)
+    X_b(idx) = 0.4;
+    Y_b(idx) = 0.4*cot(alpha_contacto_rol);
 else
     X_b(idx) = 1.0;
     Y_b(idx) = 0;
@@ -82,13 +87,13 @@ end
 
 fs(idx) = 1.2; % coefeciente de segurança - normal
 ft(idx) = 1.0; % fator de temperatura - <120º
-fl(idx) = 1.5; % fator de esforço dinâmico - motores elétricos pequenos
-fn(idx) = 0.281; % fator de rotação - 1500 rpm
+fl(idx) = 2; % fator de esforço dinâmico - acionamento motores
+fn(idx) = 0.322; % fator de rotação - 1500 rpm
 
-P0_a(idx) = X0(idx)*Fr_rolamento_a(idx) + Y0(idx)*Fx(idx);
+P0_a(idx) = X0_a(idx)*Fr_rolamento_a(idx) + Y0_a(idx)*Fx(idx);
 C0_a(idx) = fs(idx)*P0_a(idx);
 
-P0_b(idx) = X0(idx)*Fr_rolamento_b(idx) + Y0(idx)*Fx(idx);
+P0_b(idx) = X0_b(idx)*Fr_rolamento_b(idx) + Y0_b(idx)*Fx(idx);
 C0_b(idx) = fs(idx)*P0_b(idx);
 
 P_a(idx) = X_a(idx)*Fr_rolamento_a(idx) + Y_a(idx)*Fx(idx);
@@ -145,24 +150,34 @@ D(idx).tresca = (((32*fs_veio(idx))/(pi*oy(idx))*sqrt((M_fletor(idx)^2)+...
 D(idx).von_mises = (((32*fs_veio(idx))/(pi*oy(idx))*sqrt((M_fletor(idx)^2)+...
     0.75*M_torsor(idx)^2)))^(1/3); % m
 
-R_a_xy(idx) = 700;
-R_b_xy(idx) = 3400;
+R_a_xy(idx) = 747;
+R_b_xy(idx) = 3447;
 
-R_a_zy(idx) = 3900;
-R_b_zy(idx) = 8800;
+R_a_zy(idx) = 3920;
+R_b_zy(idx) = 8820;
 
 Fr_rolamento_a(idx) = sqrt((R_a_xy(idx)^2)+R_a_zy(idx)^2);
 Fr_rolamento_b(idx) = sqrt((R_b_xy(idx)^2)+R_b_zy(idx)^2);
 
     % Para este caso, optou-se por rolamentos de carreira simples com
-    % contactoangular de 25º para o 1º e 2º apoio (inicialmente)
+    % contacto angular de 40º e cilindros cónicos com contacto angular de
+    % 15º
 
 alpha_contacto_rol(idx) = deg2rad(40);
-X0(idx) = 0.5;
-Y0(idx) = 0.26;
+alpha_contacto_rol_cilindro(idx) = deg2rad(15);
+
+X0_a(idx) = 0.5;
+Y0_a(idx) = 0.26;
+
+X0_b(idx) = 0.5;
+Y0_b(idx) = 0.22*cot(alpha_contacto_rol_cilindro(idx));
+
 razao_forcas_rol_a(idx) = Fx(idx)/Fr_rolamento_a(idx);
 razao_forcas_rol_b(idx) = Fx(idx)/Fr_rolamento_b(idx);
-ceof_carga_axial(idx) = 0.68;
+
+ceof_carga_axial(idx) = 1.14;
+ceof_carga_axial_cilindro(idx) = 1.5*tan(alpha_contacto_rol_cilindro(idx));
+
 P0_axial_a(idx) = 2.3*Fr_rolamento_a(idx)*tan(alpha_contacto_rol(idx))...
     + Fx(idx)-Fx(idx-1);
 P0_axial_b(idx) = 2.3*Fr_rolamento_b(idx)*tan(alpha_contacto_rol(idx))...
@@ -176,9 +191,9 @@ else
     Y_a(idx) = 0;
 end
 
-if razao_forcas_rol_b(idx) > ceof_carga_axial(idx)
-    X_b(idx) = 0.35;
-    Y_b(idx) = 0.57;
+if razao_forcas_rol_b(idx) > ceof_carga_axial_cilindro(idx)
+    X_b(idx) = 0.4;
+    Y_b(idx) = 0.4*cot(alpha_contacto_rol_cilindro(idx));
 else
     X_b(idx) = 1.0;
     Y_b(idx) = 0;
@@ -186,13 +201,13 @@ end
 
 fs(idx) = 1.2; % coefeciente de segurança - normal
 ft(idx) = 1.0; % fator de temperatura - <120º
-fl(idx) = 1.5; % fator de esforço dinâmico - motores elétricos pequenos
+fl(idx) = 2; % fator de esforço dinâmico - motores elétricos pequenos
 fn(idx) = 0.405; % fator de rotação - 500 rpm
 
-P0_a(idx) = X0(idx)*Fr_rolamento_a(idx) + Y0(idx)*(Fx(idx)-Fx(idx-1));
+P0_a(idx) = X0_a(idx)*Fr_rolamento_a(idx) + Y0_a(idx)*(Fx(idx)-Fx(idx-1));
 C0_a(idx) = fs(idx)*P0_a(idx);
 
-P0_b(idx) = X0(idx)*Fr_rolamento_b(idx) + Y0(idx)*(Fx(idx)-Fx(idx-1));
+P0_b(idx) = X0_b(idx)*Fr_rolamento_b(idx) + Y0_b(idx)*(Fx(idx)-Fx(idx-1));
 C0_b(idx) = fs(idx)*P0_b(idx);
 
 P_a(idx) = X_a(idx)*Fr_rolamento_a(idx) + Y_a(idx)*(Fx(idx)-Fx(idx-1));
@@ -219,7 +234,7 @@ L_min_t_esmagamento(idx) = (2*M_torsor(idx))/(t_esmagamento(idx)*...
     D_veio(idx)*(h_chaveta(idx)-t1_chaveta(idx))); % m
 
 L_escolhida_roda(idx) = 0.025; % m
-L_escolhida_pinhao(idx) = 0.050; % m
+L_escolhida_pinhao(idx) = 0.045; % m
 
 % Forças de engrenamento para o par Z5 e Z6 em N
 
@@ -249,24 +264,31 @@ D(idx).tresca = (((32*fs_veio(idx))/(pi*oy(idx))*sqrt((M_fletor(idx)^2)+...
 D(idx).von_mises = (((32*fs_veio(idx))/(pi*oy(idx))*sqrt((M_fletor(idx)^2)+...
     0.75*M_torsor(idx)^2)))^(1/3); % m
 
-R_a_xy(idx) = -7100;
-R_b_xy(idx) = -5700;
+R_a_xy(idx) = -7115;
+R_b_xy(idx) = -5671;
 
-R_a_zy(idx) = -3600;
-R_b_zy(idx) = -1600;
+R_a_zy(idx) = -3762;
+R_b_zy(idx) = -626;
 
 Fr_rolamento_a(idx) = sqrt((R_a_xy(idx)^2)+R_a_zy(idx)^2);
 Fr_rolamento_b(idx) = sqrt((R_b_xy(idx)^2)+R_b_zy(idx)^2);
 
     % Para este caso, optou-se por rolamentos de carreira simples com
-    % contactoangular de 25º para o 1º e 2º apoio (inicialmente)
+    % contacto angular de 40º e cilindros cónicos com contacto angular de
+    % 15º
 
 alpha_contacto_rol(idx) = deg2rad(40);
+alpha_contacto_rol_cilindro(idx) = deg2rad(15);
+
 X0(idx) = 0.5;
 Y0(idx) = 0.26;
+
 razao_forcas_rol_a(idx) = Fx(idx)/Fr_rolamento_a(idx);
 razao_forcas_rol_b(idx) = Fx(idx)/Fr_rolamento_b(idx);
+
 ceof_carga_axial(idx) = 1.14;
+ceof_carga_axial_cilindro(idx) = 1.5*tan(alpha_contacto_rol_cilindro(idx));
+
 P0_axial_a(idx) = 2.3*Fr_rolamento_a(idx)*tan(alpha_contacto_rol(idx))...
     + Fx(idx)-Fx(idx-1);
 P0_axial_b(idx) = 2.3*Fr_rolamento_b(idx)*tan(alpha_contacto_rol(idx))...
@@ -322,15 +344,16 @@ L_min_t_corte(idx) = (2*M_torsor(idx))/(t_corte(idx)*b_chaveta(idx)*...
 L_min_t_esmagamento(idx) = (2*M_torsor(idx))/(t_esmagamento(idx)*...
     D_veio(idx)*(h_chaveta(idx)-t1_chaveta(idx))); % m
 
-L_escolhida_roda(idx) = 0.050; % m
-L_escolhida_pinhao(idx) = 0.050; % m
+L_escolhida_roda(idx) = 0.045; % m
+L_escolhida_pinhao(idx) = 0.025; % m
 
 
 %Ultimo veio
 
 idx = 4;
 
-v_veio(idx) = 2*pi*(roda(idx-1).diametro_primitivo*0.001/2)*pinhao(idx-1).rotacao/60;
+v_veio(idx) = 2*pi*(roda(idx-1).diametro_primitivo*0.001/2)*pinhao(idx-1).rotacao...
+    /u(3)/60;
 M_torsor(idx) = P_motor_catalogo/v_veio(idx);
 
 Mf_XY(idx) = 386; % N.m
@@ -422,5 +445,5 @@ L_min_t_esmagamento(idx) = (2*M_torsor(idx))/(t_esmagamento(idx)*...
     D_veio(idx)*(h_chaveta(idx)-t1_chaveta(idx)));
 
 L_escolhida_roda(idx) = 0.025; % m
-L_escolhida_pinhao(idx) = 0.050; % m
+
 
