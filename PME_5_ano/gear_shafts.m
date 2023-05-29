@@ -24,8 +24,8 @@ Fx(idx) = Ft(idx)*tan(beta(idx));
 Mz_pinhao(idx) = Fx(idx)*(pinhao(idx).diametro_primitivo*0.001/2);
 Mz_roda(idx) = Fx(idx)*(roda(idx).diametro_primitivo*0.001/2);
 
-Mf_XY(idx) = 235; %N.m
-Mf_ZX(idx) = 155; %N.m
+Mf_XY(idx) = 203; %N.m
+Mf_ZX(idx) = 214; %N.m
 M_fletor(idx) = sqrt((Mf_ZX(idx)^2)+Mf_XY(idx)^2);
 fs_veio(idx) = 1.5;
 oy(idx) = 430000000; %Pa - aço Ck45 tempera + revenido
@@ -38,24 +38,23 @@ D(idx).tresca = (((32*fs_veio(idx))/(pi*oy(idx))*sqrt((M_fletor(idx)^2)+...
 D(idx).von_mises = (((32*fs_veio(idx))/(pi*oy(idx))*sqrt((M_fletor(idx)^2)+...
     0.75*M_torsor(idx)^2)))^(1/3); % m
 
-R_a_xy(idx) = 103;
-R_b_xy(idx) = 3862;
+R_a_xy(idx) = -2114;
+R_b_xy(idx) = 1645;
 
-R_a_zy(idx) = -3920;
-R_b_zy(idx) = 5880;
+R_a_zy(idx) = -8139;
+R_b_zy(idx) = 1565;
 
 Fr_rolamento_a(idx) = sqrt((R_a_xy(idx)^2)+R_a_zy(idx)^2);
 Fr_rolamento_b(idx) = sqrt((R_b_xy(idx)^2)+R_b_zy(idx)^2);
 
-    % Para este caso, optou-se por rolamento de esferas contacto angular de
-    % 40º para o primeiro apoio e cilindros cónicos com 15º de carreira simples
-    % para o segundo.
+    % Para este caso, optou-se por rolamentos de cilindros cónicos com 15º de carreira simples
+    % para ambos os casos.
 
 alpha_contacto_rol(idx) = deg2rad(40);
 alpha_contacto_rol_cilindro(idx) = deg2rad(15);
 
 X0_a(idx) = 0.5;
-Y0_a(idx) = 0.26;
+Y0_a(idx) = 0.22*cot(alpha_contacto_rol_cilindro(idx));
 
 X0_b(idx) = 0.5;
 Y0_b(idx) = 0.22*cot(alpha_contacto_rol_cilindro(idx));
@@ -63,15 +62,12 @@ Y0_b(idx) = 0.22*cot(alpha_contacto_rol_cilindro(idx));
 razao_forcas_rol_a(idx) = Fx(idx)/Fr_rolamento_a(idx);
 razao_forcas_rol_b(idx) = Fx(idx)/Fr_rolamento_b(idx);
 
-ceof_carga_axial(idx) = 1.14;
+ceof_carga_axial(idx) = 1.5*tan(alpha_contacto_rol_cilindro(idx));
 ceof_carga_axial_cilindro(idx)= 1.5*tan(alpha_contacto_rol_cilindro);
 
-P0_axial_a(idx) = 2.3*Fr_rolamento_a(idx)*tan(alpha_contacto_rol(idx))...
-    + Fx(idx);
-
-if razao_forcas_rol_a(idx) > ceof_carga_axial(idx)
-    X_a(idx) = 0.35;
-    Y_a(idx) = 0.57;
+if razao_forcas_rol_a(idx) > ceof_carga_axial_cilindro(idx)
+    X_a(idx) = 0.4;
+    Y_a(idx) = 0.4*cot(alpha_contacto_rol_cilindro);
 else
     X_a(idx) = 1.0;
     Y_a(idx) = 0;
@@ -79,7 +75,7 @@ end
 
 if razao_forcas_rol_b(idx) > ceof_carga_axial_cilindro(idx)
     X_b(idx) = 0.4;
-    Y_b(idx) = 0.4*cot(alpha_contacto_rol);
+    Y_b(idx) = 0.4*cot(alpha_contacto_rol_cilindro);
 else
     X_b(idx) = 1.0;
     Y_b(idx) = 0;
@@ -101,6 +97,20 @@ C_a(idx) = (fl(idx)/(fn(idx)*ft(idx)))*P_a(idx);
 
 P_b(idx) = X_b(idx)*Fr_rolamento_b(idx) + Y_b(idx)*Fx(idx);
 C_b(idx) = (fl(idx)/(fn(idx)*ft(idx)))*P_b(idx);
+
+    %Tamanho do veio
+
+Rd(idx) = 25; %mm
+Re(idx) = 19; %mm
+a0 = 7.5; %mm
+a = 5; %mm
+Bz1 = pinhao(1).largura; %mm
+Bz2 = pinhao(2).largura;
+Bz3 = pinhao(3).largura;
+
+comp_min_veio(idx) = Rd(idx) + Re(idx) + Bz1 + Bz2 + Bz3 +...
+    2*a0 + 2*a;
+
 
     % Dimensionamento de chaveta
 
@@ -136,8 +146,8 @@ Fx(idx) = Ft(idx)*tan(beta(idx));
 Mz_pinhao(idx) = Fx(idx)*(pinhao(idx).diametro_primitivo*0.001/2);
 Mz_roda(idx) = Fx(idx)*(roda(idx).diametro_primitivo*0.001/2);
 
-Mf_XY(idx) = 235; %N.m
-Mf_ZX(idx) = 645; %N.m
+Mf_XY(idx) = 327; %N.m
+Mf_ZX(idx) = 642; %N.m
 M_fletor(idx) = sqrt((Mf_ZX(idx)^2)+Mf_XY(idx)^2);
 fs_veio(idx) = 1.5;
 oy(idx) = 430000000; %Pa - aço Ck45 tempera + revenido
@@ -150,11 +160,11 @@ D(idx).tresca = (((32*fs_veio(idx))/(pi*oy(idx))*sqrt((M_fletor(idx)^2)+...
 D(idx).von_mises = (((32*fs_veio(idx))/(pi*oy(idx))*sqrt((M_fletor(idx)^2)+...
     0.75*M_torsor(idx)^2)))^(1/3); % m
 
-R_a_xy(idx) = 747;
-R_b_xy(idx) = 3447;
+R_a_xy(idx) = -30;
+R_b_xy(idx) = 1473;
 
-R_a_zy(idx) = 3920;
-R_b_zy(idx) = 8820;
+R_a_zy(idx) = 4852;
+R_b_zy(idx) = 8732;
 
 Fr_rolamento_a(idx) = sqrt((R_a_xy(idx)^2)+R_a_zy(idx)^2);
 Fr_rolamento_b(idx) = sqrt((R_b_xy(idx)^2)+R_b_zy(idx)^2);
@@ -216,6 +226,19 @@ C_a(idx) = (fl(idx)/(fn(idx)*ft(idx)))*P_a(idx);
 P_b(idx) = X_b(idx)*Fr_rolamento_b(idx) + Y_b(idx)*(Fx(idx)-Fx(idx-1));
 C_b(idx) = (fl(idx)/(fn(idx)*ft(idx)))*P_b(idx);
 
+    %Tamanho do veio
+
+Rd(idx) = 17; %mm
+Re(idx) = 17; %mm
+a0 = 7.5; %mm
+a = 5; %mm
+Bz1 = pinhao(1).largura; %mm
+Bz2 = pinhao(2).largura;
+Bz3 = pinhao(3).largura;
+
+comp_min_veio(idx) = Rd(idx) + Re(idx) + Bz1 + Bz2 + Bz3 +...
+    2*a0 + 2*a;
+
     % Dimensionamento de chaveta
 
 D_veio(idx) = 0.025; % 30<d<38
@@ -250,8 +273,8 @@ Fx(idx) = Ft(idx)*tan(beta(idx));
 Mz_pinhao(idx) = Fx(idx)*(pinhao(idx).diametro_primitivo*0.001/2);
 Mz_roda(idx) = Fx(idx)*(roda(idx).diametro_primitivo*0.001/2);
 
-Mf_XY(idx) = 361; % N.m
-Mf_ZX(idx) = 2111; %N.m
+Mf_XY(idx) = 301; % N.m
+Mf_ZX(idx) = 1234; %N.m
 M_fletor(idx) = sqrt((Mf_ZX(idx)^2)+Mf_XY(idx)^2);
 fs_veio(idx) = 1.5;
 oy(idx) = 750000000; %Pa - aço 42CrMo4 tempera + revenido
@@ -264,11 +287,11 @@ D(idx).tresca = (((32*fs_veio(idx))/(pi*oy(idx))*sqrt((M_fletor(idx)^2)+...
 D(idx).von_mises = (((32*fs_veio(idx))/(pi*oy(idx))*sqrt((M_fletor(idx)^2)+...
     0.75*M_torsor(idx)^2)))^(1/3); % m
 
-R_a_xy(idx) = -7115;
-R_b_xy(idx) = -5671;
+R_a_xy(idx) = -3414;
+R_b_xy(idx) = -2987;
 
-R_a_zy(idx) = -3762;
-R_b_zy(idx) = -626;
+R_a_zy(idx) = -5010;
+R_b_zy(idx) = -5058;
 
 Fr_rolamento_a(idx) = sqrt((R_a_xy(idx)^2)+R_a_zy(idx)^2);
 Fr_rolamento_b(idx) = sqrt((R_b_xy(idx)^2)+R_b_zy(idx)^2);
@@ -328,6 +351,19 @@ C_a(idx) = (fl(idx)/(fn(idx)*ft(idx)))*P_a(idx);
 P_b(idx) = X_b(idx)*Fr_rolamento_b(idx) + Y_b(idx)*(Fx(idx)-Fx(idx-1));
 C_b(idx) = (fl(idx)/(fn(idx)*ft(idx)))*P_b(idx);
 
+    %Tamanho do veio
+
+Rd(idx) = 18; %mm
+Re(idx) = 19; %mm
+a0 = 7.5; %mm
+a = 5; %mm
+Bz1 = pinhao(1).largura; %mm
+Bz2 = pinhao(2).largura;
+Bz3 = pinhao(3).largura;
+
+comp_min_veio(idx) = Rd(idx) + Re(idx) + Bz1 + Bz2 + Bz3 +...
+    2*a0 + 2*a;
+
     % Dimensionamento de chaveta
 
 D_veio(idx) = 0.025; % 30<d<38
@@ -353,12 +389,12 @@ L_escolhida_pinhao(idx) = 0.025; % m
 
 idx = 4;
 
-v_veio(idx) = 2*pi*(roda(idx-1).diametro_primitivo*0.001/2)*pinhao(idx-1).rotacao...
-    /u(3)/60;
+v_veio(idx) = 2*pi*(pinhao(idx-1).diametro_primitivo*0.001/2)*...
+    pinhao(idx-1).rotacao/u(3)/60;
 M_torsor(idx) = P_motor_catalogo/v_veio(idx);
 
-Mf_XY(idx) = 386; % N.m
-Mf_ZX(idx) = 2510; %N.m
+Mf_XY(idx) = 498; % N.m
+Mf_ZX(idx) = 1453; %N.m
 M_fletor(idx) = sqrt((Mf_ZX(idx)^2)+Mf_XY(idx)^2);
 fs_veio(idx) = 1.5;
 oy(idx) = 750000000; %Pa - aço 42CrMo4 tempera + revenido
@@ -372,11 +408,11 @@ D(idx).von_mises = (((32*fs_veio(idx))/(pi*oy(idx))*sqrt((M_fletor(idx)^2)+...
     0.75*M_torsor(idx)^2)))^(1/3); % m
 
 
-R_a_xy(idx) = -25100;
-R_b_xy(idx) = -33000;
+R_a_xy(idx) = -9610;
+R_b_xy(idx) = -15299;
 
-R_a_zy(idx) = 3858;
-R_b_zy(idx) = -12862;
+R_a_zy(idx) = 8296;
+R_b_zy(idx) = -5240;
 
 Fr_rolamento_a(idx) = sqrt((R_a_xy(idx)^2)+R_a_zy(idx)^2);
 Fr_rolamento_b(idx) = sqrt((R_b_xy(idx)^2)+R_b_zy(idx)^2);
@@ -432,6 +468,19 @@ C_a(idx) = (fl(idx)/(fn(idx)*ft(idx)))*P_a(idx);
 
 P_b(idx) = X_b(idx)*Fr_rolamento_b(idx) + Y_b(idx)*Fx(idx-1);
 C_b(idx) = (fl(idx)/(fn(idx)*ft(idx)))*P_b(idx);
+
+    %Tamanho do veio
+
+Rd(idx) = 19; %mm
+Re(idx) = 25; %mm
+a0 = 7.5; %mm
+a = 5; %mm
+Bz1 = pinhao(1).largura; %mm
+Bz2 = pinhao(2).largura;
+Bz3 = pinhao(3).largura;
+
+comp_min_veio(idx) = Rd(idx) + Re(idx) + Bz1 + Bz2 + Bz3 +...
+    2*a0 + 2*a;
 
     % Dimensionamento de chaveta
 
