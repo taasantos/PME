@@ -100,8 +100,8 @@ C_b(idx) = (fl(idx)/(fn(idx)*ft(idx)))*P_b(idx);
 
     %Tamanho do veio
 
-Rd(idx) = 25; %mm
-Re(idx) = 19; %mm
+Rd(idx) = 23; %mm
+Re(idx) = 18; %mm
 a0 = 7.5; %mm
 a = 5; %mm
 Bz1 = pinhao(1).largura; %mm
@@ -111,25 +111,48 @@ Bz3 = pinhao(3).largura;
 comp_min_veio(idx) = Rd(idx) + Re(idx) + Bz1 + Bz2 + Bz3 +...
     2*a0 + 2*a;
 
-
     % Dimensionamento de chaveta
 
-D_veio(idx) = 0.035; % 30<d<38
+D_veio_pinhao(idx) = 0.040; % Secção do veio que acolhe a chaveta
+
+Comp_cubo_max_recomendado_pinhao(idx) = 2.5*D_veio_pinhao(idx); % N cumpre critério
 
 t_corte(idx) = 85000000; % MPa
 t_esmagamento(idx) = 80000000;
 
-b_chaveta(idx) = 10;
-h_chaveta(idx) = 8;
-t1_chaveta(idx) = 5;
-t2_chaveta(idx) = 3.3;
+b_chaveta_pinhao(idx) = 12; % 38 < d < 44
+h_chaveta_pinhao(idx) = 8;
+t1_chaveta_pinhao(idx) = 5;
+t2_chaveta_pinhao(idx) = 3.3;
 
-L_min_t_corte(idx) = (2*M_torsor(idx))/(t_corte(idx)*b_chaveta(idx)*...
-    D_veio(idx)); % m
-L_min_t_esmagamento(idx) = (2*M_torsor(idx))/(t_esmagamento(idx)*...
-    D_veio(idx)*(h_chaveta(idx)-t1_chaveta(idx))); % m
+L_min_t_corte_pinhao(idx) = (2*M_torsor(idx))/(t_corte(idx)*(b_chaveta_pinhao(idx)*10^(-3))*...
+    D_veio_pinhao(idx)); % m
+L_min_t_esmagamento_pinhao(idx) = (2*M_torsor(idx))/(t_esmagamento(idx)*...
+    D_veio_pinhao(idx)*((h_chaveta_pinhao(idx)*10^(-3))-(t1_chaveta_pinhao(idx)*10^(-3)))); % m
 
-L_escolhida_pinhao(idx) = 0.025; % m
+    %É necessário veio estriado
+
+    %Dimensionamento de um veio estriado
+
+%ligeiro 8x36x40
+
+t_esmagamento_estriado(idx) = 80000000; %Pa
+
+kt_pinhao(idx) = 1.3; 
+
+z_estriado_pinhao(idx) = 8;
+d_estriado_pinhao(idx) = 0.036;
+D_estriado_pinhao(idx) = 0.040;
+b_estriado_pinhao(idx) = 0.007;
+h_estriado_pinhao(idx) = 0.75*((D_estriado_pinhao(idx)+d_estriado_pinhao(idx))/2);
+
+comp_util_pinhao(idx) = 1.5*d_estriado_pinhao(idx);
+
+L_min_estriado_pinhao(idx) = (2*M_torsor(idx)*kt_pinhao(idx))/(((D_estriado_pinhao(idx)...
+    +d_estriado_pinhao)/2)*z_estriado_pinhao(idx)*t_esmagamento_estriado(idx)*...
+    h_estriado_pinhao(idx));
+
+L_estriado_selecionado_pinhao(idx) = pinhao(idx).largura - 5;
 
 % Forças de engrenamento para o par Z3 e Z4 em N
 
@@ -241,23 +264,76 @@ comp_min_veio(idx) = Rd(idx) + Re(idx) + Bz1 + Bz2 + Bz3 +...
 
     % Dimensionamento de chaveta
 
-D_veio(idx) = 0.025; % 30<d<38
+D_veio_pinhao(idx) = 0.040; %38<d<44
+D_veio_roda(idx) = 0.037;% 30<d<38
+
+Comp_cubo_max_recomendado_pinhao(idx) = 2.5*D_veio_pinhao(idx); %cumpre critério
+Comp_cubo_max_recomendado_roda(idx) = 2.5*D_veio_roda(idx); %cumpre critério
 
 t_corte(idx) = 85000000; % MPa
 t_esmagamento(idx) = 80000000;
 
-b_chaveta(idx) = 8;
-h_chaveta(idx) = 7;
-t1_chaveta(idx) = 4;
-t2_chaveta(idx) = 3.3;
+b_chaveta_roda(idx) = 10;
+h_chaveta_roda(idx) = 8;
+t1_chaveta_roda(idx) = 5;
+t2_chaveta_roda(idx) = 3.3;
 
-L_min_t_corte(idx) = (2*M_torsor(idx))/(t_corte(idx)*b_chaveta(idx)*...
-    D_veio(idx)); % m
-L_min_t_esmagamento(idx) = (2*M_torsor(idx))/(t_esmagamento(idx)*...
-    D_veio(idx)*(h_chaveta(idx)-t1_chaveta(idx))); % m
+b_chaveta_pinhao(idx) = 12;
+h_chaveta_pinhao(idx) = 8;
+t1_chaveta_pinhao(idx) = 5;
+t2_chaveta_pinhao(idx) = 3.3;
 
-L_escolhida_roda(idx) = 0.025; % m
-L_escolhida_pinhao(idx) = 0.045; % m
+L_min_t_corte_roda(idx) = (2*M_torsor(idx))/(t_corte(idx)*(b_chaveta_roda(idx)*10^(-3))*...
+    D_veio_roda(idx)); % m
+L_min_t_esmagamento_roda(idx) = (2*M_torsor(idx))/(t_esmagamento(idx)*...
+    D_veio_roda(idx)*((h_chaveta_roda(idx)*10^(-3))-(t1_chaveta_roda(idx)*10^(-3)))); % m
+
+L_min_t_corte_pinhao(idx) = (2*M_torsor(idx))/(t_corte(idx)*(b_chaveta_pinhao(idx)*10^(-3))*...
+    D_veio_pinhao(idx)); % m
+L_min_t_esmagamento_pinhao(idx) = (2*M_torsor(idx))/(t_esmagamento(idx)*...
+    D_veio_pinhao(idx)*((h_chaveta_pinhao(idx)*10^(-3))-(t1_chaveta_pinhao(idx)*10^(-3)))); % m
+
+    %Tanto o pinhao como a roda precisam de veio estriado
+
+     %Dimensionamento de um veio estriado 
+
+%ligeiro 8x36x40
+
+t_esmagamento_estriado(idx) = 80000000; %Pa
+
+kt_roda(idx) = 1.1; 
+
+z_estriado_roda(idx) = 8;
+d_estriado_roda(idx) = 0.036;
+D_estriado_roda(idx) = 0.040;
+b_estriado_roda(idx) = 0.007;
+h_estriado_roda(idx) = 0.75*((D_estriado_roda(idx)+d_estriado_roda(idx))/2);
+
+comp_util_roda(idx) = 1.5*d_estriado_roda(idx);
+
+L_min_estriado_roda(idx) = (2*M_torsor(idx)*kt_roda(idx))/(((D_estriado_roda(idx)...
+    +d_estriado_roda(idx))/2)*z_estriado_roda(idx)*t_esmagamento_estriado(idx)*...
+    h_estriado_roda(idx));
+
+L_estriado_selecionado_roda(idx) = roda(idx-1).largura - 5;
+
+%ligeiro 8x36x40
+
+kt_pinhao(idx) = 1.1; 
+
+z_estriado_pinhao(idx) = 8;
+d_estriado_pinhao(idx) = 0.036;
+D_estriado_pinhao(idx) = 0.040;
+b_estriado_pinhao(idx) = 0.007;
+h_estriado_pinhao(idx) = 0.75*((D_estriado_pinhao(idx)+d_estriado_pinhao(idx))/2);
+
+comp_util_pinhao(idx) = 1.5*d_estriado_pinhao(idx);
+
+L_min_estriado_pinhao(idx) = (2*M_torsor(idx)*kt_pinhao(idx))/(((D_estriado_pinhao(idx)...
+    +d_estriado_pinhao(idx))/2)*z_estriado_pinhao(idx)*t_esmagamento_estriado(idx)*...
+    h_estriado_pinhao(idx));
+
+L_estriado_selecionado_pinhao(idx) = pinhao(idx).largura - 5;
 
 % Forças de engrenamento para o par Z5 e Z6 em N
 
@@ -366,24 +442,76 @@ comp_min_veio(idx) = Rd(idx) + Re(idx) + Bz1 + Bz2 + Bz3 +...
 
     % Dimensionamento de chaveta
 
-D_veio(idx) = 0.025; % 30<d<38
+D_veio_pinhao(idx) = 0.042; %38<d<44
+D_veio_roda(idx) = 0.042;% 30<d<38
+
+Comp_cubo_max_recomendado_pinhao(idx) = 2.5*D_veio_pinhao(idx); %cumpre critério
+Comp_cubo_max_recomendado_roda(idx) = 2.5*D_veio_roda(idx); %cumpre critério
 
 t_corte(idx) = 85000000; % MPa
 t_esmagamento(idx) = 80000000;
 
-b_chaveta(idx) = 8;
-h_chaveta(idx) = 7;
-t1_chaveta(idx) = 4;
-t2_chaveta(idx) = 3.3;
+b_chaveta_roda(idx) = 12;
+h_chaveta_roda(idx) = 8;
+t1_chaveta_roda(idx) = 5;
+t2_chaveta_roda(idx) = 3.3;
 
-L_min_t_corte(idx) = (2*M_torsor(idx))/(t_corte(idx)*b_chaveta(idx)*...
-    D_veio(idx)); % m
-L_min_t_esmagamento(idx) = (2*M_torsor(idx))/(t_esmagamento(idx)*...
-    D_veio(idx)*(h_chaveta(idx)-t1_chaveta(idx))); % m
+b_chaveta_pinhao(idx) = 12;
+h_chaveta_pinhao(idx) = 8;
+t1_chaveta_pinhao(idx) = 5;
+t2_chaveta_pinhao(idx) = 3.3;
 
-L_escolhida_roda(idx) = 0.045; % m
-L_escolhida_pinhao(idx) = 0.025; % m
+L_min_t_corte_roda(idx) = (2*M_torsor(idx))/(t_corte(idx)*(b_chaveta_roda(idx)*10^(-3))*...
+    D_veio_roda(idx)); % m
+L_min_t_esmagamento_roda(idx) = (2*M_torsor(idx))/(t_esmagamento(idx)*...
+    D_veio_roda(idx)*((h_chaveta_roda(idx)*10^(-3))-(t1_chaveta_roda(idx)*10^(-3)))); % m
 
+L_min_t_corte_pinhao(idx) = (2*M_torsor(idx))/(t_corte(idx)*(b_chaveta_pinhao(idx)*10^(-3))*...
+    D_veio_pinhao(idx)); % m
+L_min_t_esmagamento_pinhao(idx) = (2*M_torsor(idx))/(t_esmagamento(idx)*...
+    D_veio_pinhao(idx)*((h_chaveta_pinhao(idx)*10^(-3))-(t1_chaveta_pinhao(idx)*10^(-3)))); % m
+
+    %tanto pinhao como roda irão levar veios estriados
+
+    %Dimensionamento de um veio estriado 
+
+%ligeiro 8x42x46
+
+t_esmagamento_estriado(idx) = 80000000; %Pa
+
+kt_roda(idx) = 1.1; 
+
+z_estriado_roda(idx) = 8;
+d_estriado_roda(idx) = 0.042;
+D_estriado_roda(idx) = 0.046;
+b_estriado_roda(idx) = 0.008;
+h_estriado_roda(idx) = 0.75*((D_estriado_roda(idx)+d_estriado_roda(idx))/2);
+
+comp_util_roda(idx) = 1.5*d_estriado_roda(idx);
+
+L_min_estriado_roda(idx) = (2*M_torsor(idx)*kt_roda(idx))/(((D_estriado_roda(idx)...
+    +d_estriado_roda(idx))/2)*z_estriado_roda(idx)*t_esmagamento_estriado(idx)*...
+    h_estriado_roda(idx));
+
+L_estriado_selecionado_roda(idx) = roda(idx-1).largura - 5;
+
+%ligeiro 8x42x46
+
+kt_pinhao(idx) = 1.1; 
+
+z_estriado_pinhao(idx) = 8;
+d_estriado_pinhao(idx) = 0.042;
+D_estriado_pinhao(idx) = 0.046;
+b_estriado_pinhao(idx) = 0.008;
+h_estriado_pinhao(idx) = 0.75*((D_estriado_pinhao(idx)+d_estriado_pinhao(idx))/2);
+
+comp_util_pinhao(idx) = 1.5*d_estriado_pinhao(idx);
+
+L_min_estriado_pinhao(idx) = (2*M_torsor(idx)*kt_pinhao(idx))/(((D_estriado_pinhao(idx)...
+    +d_estriado_pinhao(idx))/2)*z_estriado_pinhao(idx)*t_esmagamento_estriado(idx)*...
+    h_estriado_pinhao(idx));
+
+L_estriado_selecionado_pinhao(idx) = pinhao(idx).largura - 5;
 
 %Ultimo veio
 
@@ -484,21 +612,43 @@ comp_min_veio(idx) = Rd(idx) + Re(idx) + Bz1 + Bz2 + Bz3 +...
 
     % Dimensionamento de chaveta
 
-D_veio(idx) = 0.055; % 30<d<38
+D_veio_roda(idx) = 0.050;% 30<d<38
+
+Comp_cubo_max_recomendado_roda(idx) = 2.5*D_veio_roda(idx); %cumpre critério
 
 t_corte(idx) = 85000000; % MPa
 t_esmagamento(idx) = 80000000;
 
-b_chaveta(idx) = 16;
-h_chaveta(idx) = 10;
-t1_chaveta(idx) = 6;
-t2_chaveta(idx) = 4.3;
+b_chaveta_roda(idx) = 14;
+h_chaveta_roda(idx) = 9;
+t1_chaveta_roda(idx) = 5.5;
+t2_chaveta_roda(idx) = 3.8;
 
-L_min_t_corte(idx) = (2*M_torsor(idx))/(t_corte(idx)*b_chaveta(idx)*...
-    D_veio(idx));
-L_min_t_esmagamento(idx) = (2*M_torsor(idx))/(t_esmagamento(idx)*...
-    D_veio(idx)*(h_chaveta(idx)-t1_chaveta(idx)));
+L_min_t_corte_roda(idx) = (2*M_torsor(idx))/(t_corte(idx)*(b_chaveta_roda(idx)*10^(-3))*...
+    D_veio_roda(idx)); % m
+L_min_t_esmagamento_roda(idx) = (2*M_torsor(idx))/(t_esmagamento(idx)*...
+    D_veio_roda(idx)*((h_chaveta_roda(idx)*10^(-3))-(t1_chaveta_roda(idx)*10^(-3)))); % m
 
-L_escolhida_roda(idx) = 0.025; % m
+%Irá necessitar de um veio estriado também
 
+% Dimensionamento do veio estriado
 
+%Ligeiro 8x46x50
+
+t_esmagamento_estriado(idx) = 80000000; %Pa
+
+kt_roda(idx) = 1.1; 
+
+z_estriado_roda(idx) = 8;
+d_estriado_roda(idx) = 0.046;
+D_estriado_roda(idx) = 0.050;
+b_estriado_roda(idx) = 0.009;
+h_estriado_roda(idx) = 0.75*((D_estriado_roda(idx)+d_estriado_roda(idx))/2);
+
+comp_util_roda(idx) = 1.5*d_estriado_roda(idx);
+
+L_min_estriado_roda(idx) = (2*M_torsor(idx)*kt_roda(idx))/(((D_estriado_roda(idx)...
+    +d_estriado_roda(idx))/2)*z_estriado_roda(idx)*t_esmagamento_estriado(idx)*...
+    h_estriado_roda(idx));
+
+L_estriado_selecionado_roda(idx) = roda(idx-1).largura - 5;
