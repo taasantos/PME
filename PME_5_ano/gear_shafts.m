@@ -297,16 +297,16 @@ L_min_t_esmagamento_pinhao(idx) = (2*M_torsor(idx))/(t_esmagamento(idx)*...
 
      %Dimensionamento de um veio estriado 
 
-%ligeiro 8x36x40
+%ligeiro 8x42x46
 
 t_esmagamento_estriado(idx) = 80000000; %Pa
 
 kt_roda(idx) = 1.1; 
 
 z_estriado_roda(idx) = 8;
-d_estriado_roda(idx) = 0.036;
-D_estriado_roda(idx) = 0.040;
-b_estriado_roda(idx) = 0.007;
+d_estriado_roda(idx) = 0.042;
+D_estriado_roda(idx) = 0.046;
+b_estriado_roda(idx) = 0.008;
 h_estriado_roda(idx) = 0.75*((D_estriado_roda(idx)+d_estriado_roda(idx))/2);
 
 comp_util_roda(idx) = 1.5*d_estriado_roda(idx);
@@ -317,14 +317,14 @@ L_min_estriado_roda(idx) = (2*M_torsor(idx)*kt_roda(idx))/(((D_estriado_roda(idx
 
 L_estriado_selecionado_roda(idx) = roda(idx-1).largura - 5;
 
-%ligeiro 8x36x40
+%ligeiro 8x42x46
 
 kt_pinhao(idx) = 1.1; 
 
 z_estriado_pinhao(idx) = 8;
-d_estriado_pinhao(idx) = 0.036;
-D_estriado_pinhao(idx) = 0.040;
-b_estriado_pinhao(idx) = 0.007;
+d_estriado_pinhao(idx) = 0.042;
+D_estriado_pinhao(idx) = 0.046;
+b_estriado_pinhao(idx) = 0.008;
 h_estriado_pinhao(idx) = 0.75*((D_estriado_pinhao(idx)+d_estriado_pinhao(idx))/2);
 
 comp_util_pinhao(idx) = 1.5*d_estriado_pinhao(idx);
@@ -475,16 +475,16 @@ L_min_t_esmagamento_pinhao(idx) = (2*M_torsor(idx))/(t_esmagamento(idx)*...
 
     %Dimensionamento de um veio estriado 
 
-%ligeiro 8x42x46
+%ligeiro 8x46x50
 
 t_esmagamento_estriado(idx) = 80000000; %Pa
 
 kt_roda(idx) = 1.1; 
 
 z_estriado_roda(idx) = 8;
-d_estriado_roda(idx) = 0.042;
-D_estriado_roda(idx) = 0.046;
-b_estriado_roda(idx) = 0.008;
+d_estriado_roda(idx) = 0.046;
+D_estriado_roda(idx) = 0.050;
+b_estriado_roda(idx) = 0.009;
 h_estriado_roda(idx) = 0.75*((D_estriado_roda(idx)+d_estriado_roda(idx))/2);
 
 comp_util_roda(idx) = 1.5*d_estriado_roda(idx);
@@ -495,14 +495,14 @@ L_min_estriado_roda(idx) = (2*M_torsor(idx)*kt_roda(idx))/(((D_estriado_roda(idx
 
 L_estriado_selecionado_roda(idx) = roda(idx-1).largura - 5;
 
-%ligeiro 8x42x46
+%ligeiro 8x46x50
 
 kt_pinhao(idx) = 1.1; 
 
 z_estriado_pinhao(idx) = 8;
-d_estriado_pinhao(idx) = 0.042;
-D_estriado_pinhao(idx) = 0.046;
-b_estriado_pinhao(idx) = 0.008;
+d_estriado_pinhao(idx) = 0.046;
+D_estriado_pinhao(idx) = 0.050;
+b_estriado_pinhao(idx) = 0.009;
 h_estriado_pinhao(idx) = 0.75*((D_estriado_pinhao(idx)+d_estriado_pinhao(idx))/2);
 
 comp_util_pinhao(idx) = 1.5*d_estriado_pinhao(idx);
@@ -633,16 +633,16 @@ L_min_t_esmagamento_roda(idx) = (2*M_torsor(idx))/(t_esmagamento(idx)*...
 
 % Dimensionamento do veio estriado
 
-%Ligeiro 8x46x50
+%Ligeiro 8x52x58
 
 t_esmagamento_estriado(idx) = 80000000; %Pa
 
 kt_roda(idx) = 1.1; 
 
 z_estriado_roda(idx) = 8;
-d_estriado_roda(idx) = 0.046;
-D_estriado_roda(idx) = 0.050;
-b_estriado_roda(idx) = 0.009;
+d_estriado_roda(idx) = 0.052;
+D_estriado_roda(idx) = 0.058;
+b_estriado_roda(idx) = 0.0010;
 h_estriado_roda(idx) = 0.75*((D_estriado_roda(idx)+d_estriado_roda(idx))/2);
 
 comp_util_roda(idx) = 1.5*d_estriado_roda(idx);
